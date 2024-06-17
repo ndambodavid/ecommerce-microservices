@@ -1,0 +1,12 @@
+package com.ndambodevs.order.request;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record Purchaserequest(
+        @NotNull(message = "Product is mandatory")
+        Integer productId,
+        @Positive(message = "Quantity is mandatory")
+        double quantity
+) {
+}
