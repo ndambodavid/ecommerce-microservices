@@ -24,6 +24,6 @@ public record OrderRequest(
         @NotBlank(message = "Customer should be present")
         String customerId,
         @NotEmpty(message = "You should at least purchase one product")
-        List<Purchaserequest> products
+        List<PurchaseRequest> products
 ) {
 }

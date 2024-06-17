@@ -1,7 +1,7 @@
 package com.ndambodevs.order.restclient;
 
 import com.ndambodevs.order.exception.BusinessException;
-import com.ndambodevs.order.request.Purchaserequest;
+import com.ndambodevs.order.request.PurchaseRequest;
 import com.ndambodevs.order.response.PurchaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,11 +25,11 @@ public class ProductClient {
     private String productUrl;
     private final RestTemplate restTemplate;
 
-    public List<PurchaseResponse> purchaseProducts(List<Purchaserequest> requestBody) {
+    public List<PurchaseResponse> purchaseProducts(List<PurchaseRequest> requestBody) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(CONTENT_TYPE, APPLICATION_JSON_VALUE);
 
-        HttpEntity<List<Purchaserequest>> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<List<PurchaseRequest>> requestEntity = new HttpEntity<>(requestBody, headers);
         ParameterizedTypeReference<List<PurchaseResponse>> responseType = new ParameterizedTypeReference<>() {
         };
         ResponseEntity<List<PurchaseResponse>> responseEntity = restTemplate.exchange(
