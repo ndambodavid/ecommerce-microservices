@@ -14,7 +14,9 @@ import com.ndambodevs.order.restclient.CustomerClient;
 import com.ndambodevs.order.restclient.PaymentClient;
 import com.ndambodevs.order.restclient.ProductClient;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +35,8 @@ public class OrderService {
     private final OrderProducer orderProducer;
 
     @Transactional
-    public Integer createOrder(OrderRequest request) {
-        var customer = this.customerClient.findCustomerById(request.customerId())
+    public Integer createOrder(HttpHeaders headers, OrderRequest request) {
+        var customer = this.customerClient.findCustomerById(headers,request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided ID"));
 
         var purchasedProducts = productClient.purchaseProducts(request.products());
@@ -58,7 +60,7 @@ public class OrderService {
                 order.getReference(),
                 customer
         );
-        paymentClient.requestOrderPayment(paymentRequest);
+        paymentClient.requestOrderPayment(headers, paymentRequest);
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(

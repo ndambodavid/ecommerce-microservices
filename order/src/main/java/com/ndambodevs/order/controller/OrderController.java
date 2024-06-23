@@ -5,6 +5,7 @@ import com.ndambodevs.order.response.OrderResponse;
 import com.ndambodevs.order.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,9 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Integer> createOrder(
-            @RequestBody @Valid OrderRequest request
+            @RequestBody @Valid OrderRequest request, @RequestHeader HttpHeaders headers
     ) {
-        return ResponseEntity.ok(this.orderService.createOrder(request));
+        return ResponseEntity.ok(this.orderService.createOrder(headers, request));
     }
 
     @GetMapping
